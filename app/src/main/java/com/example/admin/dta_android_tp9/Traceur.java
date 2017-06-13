@@ -71,7 +71,7 @@ public abstract class Traceur extends AppCompatActivity{
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        notificationManager.notify((int) System.currentTimeMillis(), noti);
+        //notificationManager.notify((int) System.currentTimeMillis(), noti);
     }
 
 }
