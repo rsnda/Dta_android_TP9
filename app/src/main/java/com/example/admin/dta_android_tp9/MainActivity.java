@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Traceur {
 
-    int compteur= 0;
+    Point compteur = new Point();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +33,15 @@ public class MainActivity extends Traceur {
 
         final EditText et_nombre = (EditText) findViewById(R.id.editText);
         Log.d("MAIN", "compteur = " + compteur);
-        et_nombre.setText(String.valueOf(compteur));
+        et_nombre.setText(String.valueOf(compteur.getCompteur()));
 
         Button bouton_increment = (Button) findViewById(R.id.button_increment);
         bouton_increment.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Log.d("MAIN", "ON CLICK compteur = " + compteur);
-                compteur = compteur + 1;// Integer.parseInt(et_nombre.getText().toString()) + 1;
-                et_nombre.setText(String.valueOf(compteur));
+                compteur.setCompteur(compteur.getCompteur() + 1);// Integer.parseInt(et_nombre.getText().toString()) + 1;
+                et_nombre.setText(String.valueOf(compteur.getCompteur()));
             }
         });
 
@@ -51,11 +51,11 @@ public class MainActivity extends Traceur {
     protected void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
 
-        int valeur_compteur = savedInstanceState.getInt("increment_valor");
+        Point valeur_compteur = savedInstanceState.getParcelable("increment_valor");
         final EditText et_nombre = (EditText) findViewById(R.id.editText);
         Log.d("STATE", "Valeur compteur = " + valeur_compteur);
         compteur = valeur_compteur;
-        et_nombre.setText(String.valueOf(valeur_compteur));
+        et_nombre.setText(String.valueOf(valeur_compteur.getCompteur()));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class MainActivity extends Traceur {
         super.onSaveInstanceState(outState);
 
         Log.d("STATE", "Valeur compteur = " + compteur);
-        outState.putInt("increment_valor", compteur);
+        outState.putParcelable("increment_valor", compteur);
     }
 
 }

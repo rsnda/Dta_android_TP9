@@ -36,6 +36,14 @@ public class Point implements Parcelable {
     }
 
     public Point(){
+        this.compteur = 0;
+    }
 
+    public int getCompteur() {
+        return compteur;
+    }
+
+    public void setCompteur(int compteur) {
+        this.compteur = compteur;
     }
 }
