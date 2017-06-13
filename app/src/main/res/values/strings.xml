@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Dta_android_TP9</string>
+    <string name="button_main_page">CLICK !</string>
+    <string name="button_second_page">CLICK AGAIN !</string>
+</resources>
