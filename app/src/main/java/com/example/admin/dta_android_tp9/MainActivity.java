@@ -1,13 +1,12 @@
 package com.example.admin.dta_android_tp9;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.math.BigDecimal;
 
@@ -15,10 +14,14 @@ public class MainActivity extends Traceur {
 
     Point compteur = new Point();
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        chargerParametres();
 
         Button bouton_send = (Button) findViewById(R.id.button_main);
         bouton_send.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +35,7 @@ public class MainActivity extends Traceur {
 
 
         final EditText et_nombre = (EditText) findViewById(R.id.editText);
-        Log.d("MAIN", "compteur = " + compteur);
+        Log.d("MAIN", "compteur = " + compteur.getCompteur());
         et_nombre.setText(String.valueOf(compteur.getCompteur()));
 
         Button bouton_increment = (Button) findViewById(R.id.button_increment);
@@ -40,11 +43,31 @@ public class MainActivity extends Traceur {
             @Override
             public void onClick(View view){
                 Log.d("MAIN", "ON CLICK compteur = " + compteur);
-                compteur.setCompteur(compteur.getCompteur() + 1);// Integer.parseInt(et_nombre.getText().toString()) + 1;
+                compteur.setCompteur(compteur.getCompteur() + 1);
                 et_nombre.setText(String.valueOf(compteur.getCompteur()));
             }
         });
 
+    }
+
+    private void chargerParametres() {
+        sharedPreferences = getSharedPreferences("TP9", MODE_PRIVATE);
+        if(sharedPreferences.contains("PREFS")){
+            int progress = sharedPreferences.getInt("PREFS", 0);
+            compteur.setCompteur(progress);
+        }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        sauvegarderParametres();
+    }
+
+    private void sauvegarderParametres(){
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("PREFS", compteur.getCompteur());
+        edit.commit();
     }
 
     @Override
